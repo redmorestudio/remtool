@@ -1,0 +1,396 @@
+/* RemTool Responsive Styles */
+
+/* Breakpoints */
+/* Small devices (landscape phones, 576px and up) */
+/* Medium devices (tablets, 768px and up) */
+/* Large devices (desktops, 992px and up) */
+/* Extra large devices (large desktops, 1200px and up) */
+
+/* Mobile First Approach */
+
+/* Extra Small Devices (phones, less than 576px) */
+@media (max-width: 575.98px) {
+    /* Header */
+    .app-header {
+        flex-wrap: wrap;
+        padding: var(--spacing-sm);
+    }
+    
+    .logo h1 {
+        font-size: 18px;
+    }
+    
+    .progress-container {
+        order: 3;
+        width: 100%;
+        margin: var(--spacing-sm) 0 0 0;
+        max-width: none;
+    }
+    
+    .header-actions {
+        margin-left: auto;
+    }
+    
+    /* Main Layout */
+    .main-content {
+        flex-direction: column;
+    }
+    
+    .issues-panel {
+        width: 100%;
+        height: 50vh;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .pdf-panel {
+        height: 50vh;
+    }
+    
+    /* Issues */
+    .filters {
+        flex-direction: column;
+    }
+    
+    .filters select {
+        width: 100%;
+    }
+    
+    /* Modals */
+    .modal-content {
+        width: 95%;
+        margin: var(--spacing-md);
+        padding: var(--spacing-md);
+    }
+    
+    /* Buttons */
+    .panel-footer {
+        flex-direction: column;
+    }
+    
+    .panel-footer button {
+        width: 100%;
+    }
+    
+    /* PDF Controls */
+    .pdf-controls {
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+        padding: var(--spacing-sm);
+    }
+    
+    .page-controls, .zoom-controls, .view-controls {
+        flex: 1 1 100%;
+        justify-content: center;
+    }
+    
+    /* Remediation */
+    .remediation-controls {
+        padding: var(--spacing-md);
+    }
+    
+    .remediation-actions {
+        flex-direction: column;
+    }
+    
+    .remediation-actions button {
+        width: 100%;
+    }
+    
+    /* Export Modal */
+    .summary-stats {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+}
+
+/* Small Devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    /* Main Layout */
+    .main-content {
+        flex-direction: column;
+    }
+    
+    .issues-panel {
+        width: 100%;
+        height: 40vh;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .pdf-panel {
+        height: 60vh;
+    }
+    
+    /* Filters */
+    .filters {
+        flex-wrap: wrap;
+    }
+    
+    .filters select {
+        flex: 1 1 calc(50% - var(--spacing-xs));
+    }
+}
+
+/* Medium Devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    /* Issues Panel */
+    .issues-panel {
+        width: 300px;
+    }
+    
+    /* PDF Controls */
+    .pdf-controls {
+        flex-wrap: wrap;
+    }
+    
+    .page-controls {
+        flex: 1 1 auto;
+    }
+    
+    .zoom-controls, .view-controls {
+        flex: 0 0 auto;
+    }
+}
+
+/* Large Devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    /* Issues Panel */
+    .issues-panel {
+        width: 320px;
+    }
+}
+
+/* Extra Large Devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    /* Default styles apply */
+}
+
+/* Print Styles */
+@media print {
+    /* Hide UI elements */
+    .app-header,
+    .issues-panel,
+    .pdf-controls,
+    .remediation-controls,
+    .modal,
+    .loading-overlay,
+    button {
+        display: none !important;
+    }
+    
+    /* Full width PDF */
+    .main-content {
+        display: block;
+    }
+    
+    .pdf-panel {
+        width: 100%;
+    }
+    
+    .pdf-viewer {
+        background-color: white;
+        padding: 0;
+    }
+    
+    #pdf-canvas {
+        box-shadow: none;
+        max-width: 100%;
+        height: auto;
+    }
+    
+    /* Page breaks */
+    .page-break {
+        page-break-after: always;
+    }
+}
+
+/* Accessibility - High Contrast Mode */
+@media (prefers-contrast: high) {
+    :root {
+        --primary-color: #0056b3;
+        --secondary-color: #28a745;
+        --danger-color: #dc3545;
+        --warning-color: #ffc107;
+        --info-color: #17a2b8;
+        --dark-bg: #000;
+        --light-bg: #fff;
+        --text-dark: #000;
+        --text-light: #333;
+        --border-color: #000;
+    }
+    
+    .issue-card {
+        border-width: 2px;
+    }
+    
+    button {
+        border: 2px solid currentColor;
+    }
+}
+
+/* Accessibility - Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --dark-bg: #1a1a1a;
+        --light-bg: #2d2d2d;
+        --text-dark: #e0e0e0;
+        --text-light: #b0b0b0;
+        --border-color: #404040;
+    }
+    
+    body {
+        background-color: var(--dark-bg);
+        color: var(--text-dark);
+    }
+    
+    .app-header {
+        background-color: #0d0d0d;
+    }
+    
+    .issues-panel,
+    .pdf-controls,
+    .remediation-controls,
+    .modal-content {
+        background-color: var(--light-bg);
+        color: var(--text-dark);
+    }
+    
+    .issue-card {
+        background-color: #3a3a3a;
+        border-color: var(--border-color);
+    }
+    
+    .issue-card:hover {
+        background-color: #4a4a4a;
+    }
+    
+    input, select, textarea {
+        background-color: #3a3a3a;
+        color: var(--text-dark);
+        border-color: var(--border-color);
+    }
+    
+    .pdf-viewer {
+        background-color: #1a1a1a;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+    /* Larger touch targets */
+    button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .issue-card {
+        padding: var(--spacing-md);
+    }
+    
+    .issue-actions button {
+        padding: 8px 16px;
+    }
+    
+    /* Disable hover effects */
+    .issue-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+    
+    /* Larger form controls */
+    input, select, textarea {
+        min-height: 44px;
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+}
+
+/* Landscape Orientation for Mobile */
+@media (max-width: 767.98px) and (orientation: landscape) {
+    .app-header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+    
+    .main-content {
+        flex-direction: row;
+    }
+    
+    .issues-panel {
+        width: 40%;
+        height: calc(100vh - 60px);
+        border-right: 1px solid var(--border-color);
+        border-bottom: none;
+    }
+    
+    .pdf-panel {
+        width: 60%;
+        height: calc(100vh - 60px);
+    }
+    
+    .pdf-viewer {
+        max-height: calc(100vh - 180px);
+    }
+}
+
+/* Utility Classes for Responsive Design */
+/* Hide on mobile */
+@media (max-width: 767.98px) {
+    .hide-mobile {
+        display: none !important;
+    }
+}
+
+/* Hide on tablet */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .hide-tablet {
+        display: none !important;
+    }
+}
+
+/* Hide on desktop */
+@media (min-width: 992px) {
+    .hide-desktop {
+        display: none !important;
+    }
+}
+
+/* Show only on mobile */
+.show-mobile {
+    display: none !important;
+}
+
+@media (max-width: 767.98px) {
+    .show-mobile {
+        display: block !important;
+    }
+}
+
+/* Responsive Text */
+@media (max-width: 575.98px) {
+    h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.25rem; }
+    h3 { font-size: 1.1rem; }
+}
+
+/* Responsive Spacing */
+@media (max-width: 767.98px) {
+    :root {
+        --spacing-xs: 2px;
+        --spacing-sm: 4px;
+        --spacing-md: 8px;
+        --spacing-lg: 16px;
+        --spacing-xl: 24px;
+    }
+}

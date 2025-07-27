@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RemTool Setup</title>
+</head>
+<body>
+    <h1>RemTool Library Setup</h1>
+    <p>To complete the RemTool setup, you need to download the following libraries and place them in the lib/ folder:</p>
+    
+    <h2>Required Libraries:</h2>
+    <ol>
+        <li>
+            <strong>PDF.js</strong> (for reading and displaying PDFs)
+            <ul>
+                <li>Download from: <a href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">pdf.js</a></li>
+                <li>Download from: <a href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js">pdf.worker.js</a></li>
+                <li>Save as: lib/pdf.js and lib/pdf.worker.js</li>
+            </ul>
+        </li>
+        <li>
+            <strong>PDF-lib</strong> (for creating and modifying PDFs)
+            <ul>
+                <li>Download from: <a href="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js">pdf-lib.min.js</a></li>
+                <li>Save as: lib/pdf-lib.min.js</li>
+            </ul>
+        </li>
+    </ol>
+    
+    <h2>Alternative: Use CDN Links</h2>
+    <p>Alternatively, you can modify index.html to use CDN links instead of local files:</p>
+    <pre>
+    &lt;!-- Replace the local script tags with: --&gt;
+    &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"&gt;&lt;/script&gt;
+    &lt;script&gt;
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    &lt;/script&gt;
+    &lt;script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"&gt;&lt;/script&gt;
+    </pre>
+    
+    <h2>To Run RemTool:</h2>
+    <ol>
+        <li>Open a terminal in the remtool directory</li>
+        <li>Start a local web server:
+            <ul>
+                <li>Python 3: <code>python3 -m http.server 8000</code></li>
+                <li>Python 2: <code>python -m SimpleHTTPServer 8000</code></li>
+                <li>Node.js: <code>npx http-server -p 8000</code></li>
+            </ul>
+        </li>
+        <li>Open your browser to: <a href="http://localhost:8000">http://localhost:8000</a></li>
+    </ol>
+    
+    <h2>API Keys Required:</h2>
+    <p>You'll need at least one of these API keys:</p>
+    <ul>
+        <li><strong>Grok API Key</strong> (required): Get from X.AI</li>
+        <li><strong>Gemini API Key</strong> (optional): Get from Google AI Studio</li>
+        <li><strong>Claude Sonnet API Key</strong> (optional): Get from Anthropic</li>
+    </ul>
+</body>
+</html>

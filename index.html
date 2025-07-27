@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RemTool - PDF Accessibility Remediation</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">
+                <h1>RemTool</h1>
+                <span class="version">v1.0</span>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span class="progress-text" id="progress-text">Ready to start</span>
+            </div>
+            <div class="header-actions">
+                <button class="btn-icon" onclick="toggleSettings()" title="Settings">⚙️</button>
+                <button class="btn-icon" onclick="showHelp()" title="Help">❓</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Issues Panel -->
+            <aside class="issues-panel" id="issues-panel">
+                <div class="panel-header">
+                    <h2>Accessibility Issues</h2>
+                    <span class="issue-count" id="issue-count">0 issues</span>
+                </div>
+                
+                <div class="filters">
+                    <select id="filter-type" onchange="filterIssues()">
+                        <option value="all">All Types</option>
+                        <option value="structure">Structural</option>
+                        <option value="content">Content</option>
+                        <option value="missing-alt-text">Missing Alt Text</option>
+                        <option value="heading-hierarchy">Heading Issues</option>
+                        <option value="reading-order">Reading Order</option>
+                        <option value="table-structure">Table Structure</option>
+                    </select>
+                    
+                    <select id="filter-status" onchange="filterIssues()">
+                        <option value="all">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="accepted">Accepted</option>
+                        <option value="modified">Modified</option>
+                        <option value="skipped">Skipped</option>
+                        <option value="flagged">Flagged</option>
+                    </select>
+                    
+                    <select id="filter-severity" onchange="filterIssues()">
+                        <option value="all">All Severities</option>
+                        <option value="error">Errors</option>
+                        <option value="warning">Warnings</option>
+                        <option value="info">Info</option>
+                    </select>
+                </div>
+                
+                <div class="issues-list" id="issues-list">
+                    <!-- Issue cards will be dynamically inserted here -->
+                </div>
+                
+                <div class="panel-footer">
+                    <button class="btn-secondary" onclick="skipAllVisible()">
+                        Skip All Visible
+                    </button>
+                    <button class="btn-primary" onclick="acceptAllSuggestions()">
+                        Accept All Suggestions
+                    </button>
+                </div>
+            </aside>
+
+            <!-- PDF Viewer Panel -->
+            <section class="pdf-panel">
+                <div class="pdf-controls">
+                    <div class="page-controls">
+                        <button onclick="previousPage()" id="prev-page">◀</button>
+                        <span class="page-info">
+                            Page <input type="number" id="page-num" value="1" onchange="goToPage()"> 
+                            of <span id="page-count">0</span>
+                        </span>
+                        <button onclick="nextPage()" id="next-page">▶</button>
+                    </div>
+                    
+                    <div class="zoom-controls">
+                        <button onclick="zoomOut()">−</button>
+                        <span id="zoom-level">100%</span>
+                        <button onclick="zoomIn()">+</button>
+                        <button onclick="fitToWidth()">Fit Width</button>
+                    </div>
+                    
+                    <div class="view-controls">
+                        <button onclick="toggleHighlights()" class="toggle-btn" id="highlight-toggle">
+                            Highlights ON
+                        </button>
+                        <button onclick="toggleReadingOrder()" class="toggle-btn">
+                            Show Reading Order
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="pdf-viewer" id="pdf-viewer">
+                    <canvas id="pdf-canvas"></canvas>
+                    <div class="text-layer" id="text-layer"></div>
+                    <div class="annotation-layer" id="annotation-layer"></div>
+                    <div class="highlight-layer" id="highlight-layer"></div>
+                </div>
+                
+                <!-- Remediation Controls -->
+                <div class="remediation-controls" id="remediation-controls">
+                    <!-- Dynamic remediation UI will be inserted here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Upload Modal -->
+        <div class="modal" id="upload-modal">
+            <div class="modal-content">
+                <h2>Upload PDF for Remediation</h2>
+                
+                <div class="upload-area" id="upload-area">
+                    <input type="file" id="pdf-input" accept=".pdf" hidden>
+                    <div class="upload-icon">📄</div>
+                    <p>Drag & drop your PDF here</p>
+                    <p class="upload-or">or</p>
+                    <button class="btn-primary" onclick="document.getElementById('pdf-input').click()">
+                        Browse Files
+                    </button>
+                    <p class="upload-info">Maximum 50 pages for PoC</p>
+                </div>
+                
+                <div class="api-config">
+                    <h3>API Configuration</h3>
+                    <div class="api-key-group">
+                        <label for="grok-key">
+                            Grok API Key <span class="required">*</span>
+                        </label>
+                        <input type="password" id="grok-key" placeholder="xai-...">
+                        <span class="api-status" id="grok-status"></span>
+                    </div>
+                    
+                    <div class="api-key-group">
+                        <label for="gemini-key">
+                            Gemini API Key <span class="optional">(optional)</span>
+                        </label>
+                        <input type="password" id="gemini-key" placeholder="AIza...">
+                        <span class="api-status" id="gemini-status"></span>
+                    </div>
+                    
+                    <div class="api-key-group">
+                        <label for="sonnet-key">
+                            Claude Sonnet API Key <span class="optional">(optional)</span>
+                        </label>
+                        <input type="password" id="sonnet-key" placeholder="sk-ant-...">
+                        <span class="api-status" id="sonnet-status"></span>
+                    </div>
+                    
+                    <button class="btn-secondary" onclick="testAPIKeys()">Test API Keys</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loading-overlay">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <p id="loading-message">Processing...</p>
+            </div>
+        </div>
+
+        <!-- Export Modal -->
+        <div class="modal" id="export-modal" style="display: none;">
+            <div class="modal-content">
+                <h2>Export Remediated PDF</h2>
+                
+                <div class="export-summary">
+                    <h3>Remediation Summary</h3>
+                    <div class="summary-stats">
+                        <div class="stat">
+                            <span class="stat-value" id="total-issues">0</span>
+                            <span class="stat-label">Total Issues</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value" id="resolved-issues">0</span>
+                            <span class="stat-label">Resolved</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value" id="skipped-issues">0</span>
+                            <span class="stat-label">Skipped</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="export-options">
+                    <label>
+                        <input type="checkbox" id="include-report" checked>
+                        Include remediation report
+                    </label>
+                    <label>
+                        <input type="checkbox" id="add-metadata" checked>
+                        Add compliance metadata
+                    </label>
+                </div>
+                
+                <div class="export-actions">
+                    <button class="btn-secondary" onclick="closeExportModal()">Cancel</button>
+                    <button class="btn-primary" onclick="exportPDF()">Export PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="lib/pdf.js"></script>
+    <script src="lib/pdf-lib.min.js"></script>
+    <script src="config.js"></script>
+    <script src="modules/state-manager.js"></script>
+    <script src="modules/pdf-analyzer.js"></script>
+    <script src="modules/ai-services.js"></script>
+    <script src="modules/remediation-ui.js"></script>
+    <script src="modules/pdf-export.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
