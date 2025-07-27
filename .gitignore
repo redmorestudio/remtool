@@ -1,0 +1,69 @@
+# Dependencies
+node_modules/
+lib/pdf.js
+lib/pdf.worker.js
+lib/pdf-lib.min.js
+
+# API Keys and Secrets
+.env
+.env.local
+.env.*.local
+apikeys.json
+config.local.js
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Editor directories and files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Build outputs
+dist/
+build/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# User uploaded files (for privacy)
+uploads/
+temp-pdfs/
+
+# Local development
+*.local.*
+local-test-files/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# Backup files
+*.backup
+*.bak
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
